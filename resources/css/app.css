@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply inline-block px-4 py-2 rounded font-medium border focus:outline-none focus:ring ring-purple-300 text-center;
+    }
+    @responsive {
+        .btn-lg {
+            @apply px-6 py-3 text-xl;
+        }
+        .btn-sm {
+            @apply px-2 py-1 font-normal text-sm;
+        }
+    }
+
+    .btn:disabled {
+        @apply opacity-75;
+    }
+
+    .btn-primary {
+        @apply text-white bg-gradient-to-b from-purple-400 to-purple-500 border-purple-600;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(255, 255, 255, 0.1) inset;
+        text-shadow: 0 1px 0 theme('colors.purple.600');
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+        @apply from-purple-500 to-purple-600 border-purple-700;
+    }
+    .btn-primary:active {
+        @apply bg-none bg-purple-600 border-purple-700;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+    }
+
+    .btn-secondary {
+        @apply text-gray-800 bg-gradient-to-b from-gray-50 to-gray-100 border-gray-300;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(255, 255, 255, 0.1) inset;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+        @apply from-gray-100 to-gray-200 border-gray-400;
+    }
+    .btn-secondary:active {
+        @apply bg-none bg-gray-200 border-gray-400;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+    }
+
+    .btn-black {
+        @apply text-white bg-gradient-to-b from-gray-600 to-gray-700 border-gray-800;
+    }
+    .btn-black:hover,
+    .btn-black:focus {
+        @apply from-gray-700 to-gray-800 border-gray-900;
+    }
+    .btn-black:active {
+        @apply bg-none bg-gray-800 border-gray-900;
+    }
+
+    .input-text {
+        @apply block w-full rounded shadow-sm border-gray-400 focus:border-purple-500 focus:ring focus:ring-purple-300;
+    }
+    .input-text:disabled {
+        @apply bg-gray-100 text-gray-800;
+    }
+}
