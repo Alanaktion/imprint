@@ -92,10 +92,10 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { reactive } from 'vue'
-import HomeBrand from '../components/HomeBrand'
-import HomeTagline from '../components/HomeTagline'
+import HomeBrand from '../components/HomeBrand.vue'
+// import HomeTagline from '../components/HomeTagline.vue'
 import {
     generateKey,
     exportKey,
@@ -107,60 +107,46 @@ import {
     deriveKey,
 } from '../lib/crypto'
 
-export default {
-    components: {
-        HomeBrand,
-        HomeTagline,
-    },
-    setup() {
-        const form = reactive({
-            loading: false,
-            name: '',
-            email: '',
-            password: '',
-            password_confirm: '',
-        })
+const form = reactive({
+    loading: false,
+    name: '',
+    email: '',
+    password: '',
+    password_confirm: '',
+})
 
-        const register = async () => {
-            form.loading = true
-        }
+const register = async () => {
+    form.loading = true
+}
 
-        const test = async () => {
-            // Test key generation
-            const key = await generateKey()
-            const str = await exportKey(key)
-            console.log('key str', str)
-            console.log('key reimport', await importKey(str))
+const test = async () => {
+    // Test key generation
+    const key = await generateKey()
+    const str = await exportKey(key)
+    console.log('key str', str)
+    console.log('key reimport', await importKey(str))
 
-            // Test encryption
-            const plain = 'This is a test message.'
-            const cipher = await encrypt(key, plain)
-            console.log('cipher', cipher)
-            console.log('plain', await decrypt(key, cipher.iv, cipher.text))
+    // Test encryption
+    const plain = 'This is a test message.'
+    const cipher = await encrypt(key, plain)
+    console.log('cipher', cipher)
+    console.log('plain', await decrypt(key, cipher.iv, cipher.text))
 
-            // Test scrypt
-            const password = 'password here'
-            const sA = generateSalt()
-            console.log('sA', sA)
-            const startTime = Date.now()
-            const hash = await generateHash(password, sA)
-            console.log('scrypt time:', Math.round((Date.now() - startTime) / 100) / 10)
-            console.log('hash', hash)
+    // Test scrypt
+    const password = 'password here'
+    const sA = await generateSalt()
+    console.log('sA', sA)
+    const startTime = Date.now()
+    const hash = await generateHash(password, sA)
+    console.log('scrypt time:', Math.round((Date.now() - startTime) / 100) / 10)
+    console.log('hash', hash)
 
-            // Test key derivation
-            const sK = generateSalt()
-            console.log('sK', sK)
-            const startTimeKey = Date.now()
-            const derived = await deriveKey(password, sK)
-            console.log('key deriv time:', Math.round((Date.now() - startTimeKey) / 100) / 10)
-            console.log('derived', derived)
-        }
-
-        return {
-            form,
-            register,
-            test,
-        }
-    },
+    // Test key derivation
+    const sK = await generateSalt()
+    console.log('sK', sK)
+    const startTimeKey = Date.now()
+    const derived = await deriveKey(password, sK)
+    console.log('key deriv time:', Math.round((Date.now() - startTimeKey) / 100) / 10)
+    console.log('derived', derived)
 }
 </script>

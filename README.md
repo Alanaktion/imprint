@@ -15,7 +15,7 @@ Future planned features:
 ## Requirements
 
 - PHP 8
-- Node LTS 14+
+- Node LTS 16+
 - MySQL 8 or other Laravel-supported RDBMS
 - HTTPS -- The site must be served via a secure connection for the native cryptography functions to be available
 
@@ -59,7 +59,7 @@ There is no ability to perform a traditional "reset" in this model, though I pla
 To change the password after already unlocking the AES key though, the process is as follows:
 
 1. The authenticated user requests sK and sA from the server
-2. The browser re-encrypts the AES key with the user's *new* passphrase, using script with sK as the encryption key like it does during registration
+2. The browser re-encrypts the AES key with the user's _new_ passphrase, using scrypt with sK as the encryption key like it does during registration
 3. The browser generates an scrypt hash from the user's new passphrase, using sA
 4. The browser sends the new encrypted AES key and the new sA-salted hashed passphrase to the server
 5. The server replaces the previously-stored encrypted AES key and password hash

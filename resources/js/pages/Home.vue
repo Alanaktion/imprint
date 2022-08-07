@@ -54,35 +54,22 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import HomeBrand from '../components/HomeBrand'
-import HomeTagline from '../components/HomeTagline'
+// import { useRouter } from 'vue-router'
+import HomeBrand from '../components/HomeBrand.vue'
+import HomeTagline from '../components/HomeTagline.vue'
 
-export default {
-    components: {
-        HomeBrand,
-        HomeTagline,
-    },
-    setup() {
-        const form = reactive({
-            loading: false,
-            email: '',
-            password: '',
-        })
+const form = reactive({
+    loading: false,
+    email: '',
+    password: '',
+})
 
-        const router = useRouter()
+// const router = useRouter()
 
-        const login = () => {
-            form.loading = true
-            // TODO: log in
-        }
-
-        return {
-            form,
-            login,
-        }
-    },
+const login = () => {
+    form.loading = true
+    // TODO: log in
 }
 </script>

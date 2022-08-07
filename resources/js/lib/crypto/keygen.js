@@ -1,3 +1,5 @@
+import { arrayToBase64, base64ToArray } from './base64'
+
 export const algorithm = {
     name: 'AES-GCM',
     length: 256,
@@ -23,7 +25,7 @@ export async function generateKey() {
 export async function exportKey(key) {
     const exported = await crypto.subtle.exportKey('raw', key)
     const u8 = new Uint8Array(exported)
-    return Buffer.from(u8).toString('base64')
+    return await arrayToBase64(u8)
 }
 
 /**
@@ -32,8 +34,7 @@ export async function exportKey(key) {
  * @returns {Promise<CryptoKey>}
  */
 export async function importKey(key) {
-    const bin = Buffer.from(key, 'base64').toString('binary')
-    const u8 = Uint8Array.from(bin, c => c.charCodeAt(0))
+    const u8 = base64ToArray(key)
     return await crypto.subtle.importKey('raw', u8, algorithm, true, keyUsages)
 }
 
@@ -44,7 +45,7 @@ export async function importKey(key) {
  * @returns {Promise<CryptoKey>}
  */
 export async function deriveKey(password, salt) {
-    const passBuffer = Buffer.from(password.normalize('NFKC'), 'utf8')
+    const passBuffer = new TextEncoder('utf-8').encode(password.normalize('NFKC'))
     const baseKey = await crypto.subtle.importKey(
         'raw',
         passBuffer,
@@ -54,7 +55,7 @@ export async function deriveKey(password, salt) {
     )
     return await crypto.subtle.deriveKey({
         name: 'PBKDF2',
-        salt: Buffer.from(salt, 'base64'),
+        salt: base64ToArray(salt),
         iterations: pbkdf2Iterations,
         hash: { name: 'SHA-256' },
         length: 256,

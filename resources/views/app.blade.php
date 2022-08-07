@@ -12,8 +12,7 @@
 
     <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
 </head>
 <body class="antialiased">
     <noscript>
